@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-"""DB module for the AirBnB clone project
+"""DB module
 """
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-from sqlalchemy.exc import NoResultFound
-from typing import Union
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 
 from user import Base, User
 
 
 class DB:
-    """DB class to handle all the interactions with the database
+    """DB class
     """
 
     def __init__(self) -> None:
@@ -32,29 +32,39 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """Add a new user to the database"""
-        user = User(email=email, hashed_password=hashed_password)
-        self._session.add(user)
+        """_summary_
+        """
+        new_user = User(email=email, hashed_password=hashed_password)
+        # add new user and commit to database
+        self._session.add(new_user)
         self._session.commit()
+        return new_user
 
-    def find_user_by(self, **kwargs) -> Union[User, None]:
-        """finds a user by a given criteria"""
-        all_users = self._session.query(User)
-        for key, value in kwargs.items():
-            if hasattr(User, key):
-                all_users = all_users.filter(getattr(User, key) == value)
-        try:
-            return all_users.one()
-        except NoResultFound:
-            return None
+    def find_user_by(self, **kwargs) -> User:
+        """_summary_
+
+        Returns:
+            User: _description_
+        """
+        if not kwargs:
+            raise InvalidRequestError
+
+        user = self._session.query(User).filter_by(**kwargs).first()
+        if not user:
+            raise NoResultFound
+        return user
 
     def update_user(self, user_id: int, **kwargs) -> None:
-        """updates a user by a given criteria"""
+        """_summary_
+
+        Args:
+            user_id (int): _description_
+        """
         user = self.find_user_by(id=user_id)
-        if user:
-            for key, value in kwargs.items():
-                if hasattr(user, key):
-                    setattr(user, key, value)
-            self._session.commit()
-        else:
-            raise NoResultFound('not found')
+        for key, value in kwargs.items():
+            if not hasattr(user, key):
+                raise ValueError
+            setattr(user, key, value)
+
+        self._session.commit()
+        return None
