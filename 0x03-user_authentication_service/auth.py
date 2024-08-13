@@ -8,6 +8,7 @@ from typing import Union
 
 
 def _hash_password(password: str) -> bytes:
+    """Hash a password for storing."""
     salt = bcrypt.gensalt()
     byte_passwrd = password.encode('utf-8')
     hashed_password = bcrypt.hashpw(byte_passwrd, salt)
@@ -15,6 +16,7 @@ def _hash_password(password: str) -> bytes:
 
 
 def _generate_uuid() -> str:
+    """generate a new uuid"""
     return str(uuid.uuid4())
 
 
