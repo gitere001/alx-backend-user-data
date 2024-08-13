@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+"""authenication model"""
 import bcrypt
 from db import DB
 import uuid
