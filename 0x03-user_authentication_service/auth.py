@@ -110,19 +110,20 @@ class Auth:
         else:
             return user
 
-    def destroy_session(self, user_id: str) -> None:
-        """_summary_
-
+    def destroy_session(self, user_id: int) -> None:
+        """
+        Take a user_id and destroy that user's session and update their
+        session_id attribute to None
         Args:
-            user_id (str): _description_
+            user_id (int): user's id
+        Return:
+            None
         """
         try:
-            user = self._db.find_user_by(id=user_id)
-        except NoResultFound:
+            self._db.update_user(user_id, session_id=None)
+        except ValueError:
             return None
-        else:
-            user.session_id = None
-            return None
+        return None
 
     def get_reset_password_token(self, email: str) -> str:
         """_summary_
