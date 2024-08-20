@@ -1,0 +1,8 @@
+2024-08-10 13:32:50,437 - is_valid_password called with James@100 (valid=True): called 1 time(s)
+2024-08-10 13:32:50,439 - is_valid_email called with sasmuypwa2019@gmail.com (valid=True): called 1 time(s)
+2024-08-10 13:32:50,440 - is_valid_password called with James@100 (valid=True): called 2 time(s)
+2024-08-10 13:32:50,440 - is_valid_email called with sasmuypwa2019@gmail.com (valid=True): called 2 time(s)
+2024-08-10 13:33:14,307 - is_valid_password called with James@100 (valid=True): called 1 time(s)
+2024-08-10 13:33:14,308 - is_valid_email called with sasmuypwa2019@gmail.com (valid=True): called 1 time(s)
+2024-08-10 13:33:14,308 - is_valid_password called with James@100 (valid=True): called 2 time(s)
+2024-08-10 13:33:14,308 - is_valid_email called with sasmuypwa2019@gmail.com (valid=True): called 2 time(s)
